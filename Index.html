@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grade 3 IsiZulu Games</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:#f0f0f0;
+    margin:0;
+    padding:20px;
+    text-align:center;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    border:5px solid black;
+}
+
+h1{
+    font-size:45px;
+}
+
+.menu button{
+    width:100%;
+    padding:20px;
+    margin:10px 0;
+    font-size:25px;
+    border-radius:15px;
+    border:3px solid black;
+    background:white;
+}
+
+.menu button:hover{
+    background:black;
+    color:white;
+}
+
+.game{
+    display:none;
+    margin-top:30px;
+    border:3px solid black;
+    border-radius:20px;
+    padding:20px;
+}
+
+.question{
+    font-size:32px;
+    margin:20px;
+}
+
+.answers button{
+    width:100%;
+    padding:18px;
+    margin:10px 0;
+    font-size:24px;
+    border-radius:15px;
+    border:3px solid black;
+    background:white;
+}
+
+.answers button:hover{
+    background:black;
+    color:white;
+}
+
+.big{
+    font-size:90px;
+}
+
+.score{
+    font-size:30px;
+    margin-top:20px;
+    font-weight:bold;
+}
+
+.back{
+    margin-top:20px;
+    padding:15px 30px;
+    font-size:22px;
+    border:none;
+    border-radius:12px;
+    background:black;
+    color:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🎮 Grade 3 IsiZulu Games</h1>
+
+<div class="menu" id="menu">
+
+<button onclick="openGame('animals')">
+🐄 Animal Game
+</button>
+
+<button onclick="openGame('punctuation')">
+✏️ Punctuation Game
+</button>
+
+<button onclick="openGame('past')">
+📚 Past Tense Game
+</button>
+
+<button onclick="openGame('counting')">
+🔢 Counting Game
+</button>
+
+<button onclick="openGame('matching')">
+🎯 Matching Game
+</button>
+
+</div>
+
+<!-- ANIMAL GAME -->
+
+<div class="game" id="animals">
+
+<h2>🐄 Animal Game</h2>
+
+<div class="big" id="animalEmoji">🐔</div>
+
+<div class="question" id="animalQuestion">
+Yisiphi isilwane lesi?
+</div>
+
+<div class="answers" id="animalAnswers"></div>
+
+<div class="score" id="animalScore">
+Amaphuzu: 0
+</div>
+
+<button class="back" onclick="goHome()">
+⬅️ Home
+</button>
+
+</div>
+
+<!-- PUNCTUATION -->
+
+<div class="game" id="punctuation">
+
+<h2>✏️ Punctuation Game</h2>
+
+<div class="question" id="punctuationQuestion">
+Ingulube injani
+</div>
+
+<div class="answers">
+
+<button onclick="checkPunctuation('?')">?</button>
+
+<button onclick="checkPunctuation('.')">.</button>
+
+<button onclick="checkPunctuation('!')">!</button>
+
+</div>
+
+<div class="score" id="punctuationScore">
+Amaphuzu: 0
+</div>
+
+<button class="back" onclick="goHome()">
+⬅️ Home
+</button>
+
+</div>
+
+<!-- PAST TENSE -->
+
+<div class="game" id="past">
+
+<h2>📚 Past Tense Game</h2>
+
+<div class="question" id="pastQuestion">
+Ngisenga inkomo
+</div>
+
+<div class="answers">
+
+<button onclick="checkPast('Ngasenga inkomo')">
+Ngasenga inkomo
+</button>
+
+<button onclick="checkPast('Ngibona inkomo')">
+Ngibona inkomo
+</button>
+
+<button onclick="checkPast('Sibala inkomo')">
+Sibala inkomo
+</button>
+
+</div>
+
+<div class="score" id="pastScore">
+Amaphuzu: 0
+</div>
+
+<button class="back" onclick="goHome()">
+⬅️ Home
+</button>
+
+</div>
+
+<!-- COUNTING -->
+
+<div class="game" id="counting">
+
+<h2>🔢 Counting Game</h2>
+
+<div class="question">
+🐐 🐐 🐐
+</div>
+
+<div class="question">
+Zingaki izimbuzi?
+</div>
+
+<div class="answers">
+
+<button onclick="checkCount(2)">2</button>
+
+<button onclick="checkCount(3)">3</button>
+
+<button onclick="checkCount(5)">5</button>
+
+</div>
+
+<div class="score" id="countScore">
+Amaphuzu: 0
+</div>
+
+<button class="back" onclick="goHome()">
+⬅️ Home
+</button>
+
+</div>
+
+<!-- MATCHING -->
+
+<div class="game" id="matching">
+
+<h2>🎯 Matching Game</h2>
+
+<div class="question">
+Match:
+🐄 = ?
+</div>
+
+<div class="answers">
+
+<button onclick="checkMatch('inkomo')">
+inkomo
+</button>
+
+<button onclick="checkMatch('imbuzi')">
+imbuzi
+</button>
+
+<button onclick="checkMatch('inkukhu')">
+inkukhu
+</button>
+
+</div>
+
+<div class="score" id="matchScore">
+Amaphuzu: 0
+</div>
+
+<button class="back" onclick="goHome()">
+⬅️ Home
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+let animalScore = 0;
+
+const animalQuestions = [
+
+{
+emoji:"🐔",
+correct:"inkukhu",
+answers:["inkukhu","imbuzi","ihhashi"]
+},
+
+{
+emoji:"🐄",
+correct:"inkomo",
+answers:["inkomo","inkukhu","ingulube"]
+},
+
+{
+emoji:"🐎",
+correct:"ihhashi",
+answers:["ihhashi","imbuzi","inkukhu"]
+}
+
+];
+
+let animalCurrent = 0;
+
+function openGame(id){
+
+document.getElementById("menu").style.display="none";
+
+let games=document.querySelectorAll(".game");
+
+games.forEach(game=>game.style.display="none");
+
+document.getElementById(id).style.display="block";
+
+if(id==="animals"){
+loadAnimal();
+}
+
+}
+
+function goHome(){
+
+document.getElementById("menu").style.display="block";
+
+let games=document.querySelectorAll(".game");
+
+games.forEach(game=>game.style.display="none");
+
+}
+
+function loadAnimal(){
+
+document.getElementById("animalEmoji").innerHTML =
+animalQuestions[animalCurrent].emoji;
+
+let buttons="";
+
+animalQuestions[animalCurrent].answers.forEach(answer=>{
+
+buttons +=
+`<button onclick="checkAnimal('${answer}')">${answer}</button>`;
+
+});
+
+document.getElementById("animalAnswers").innerHTML =
+buttons;
+
+}
+
+function checkAnimal(answer){
+
+if(answer===animalQuestions[animalCurrent].correct){
+
+animalScore++;
+
+alert("✅ Kulungile!");
+
+}else{
+
+alert("❌ Cha!");
+
+}
+
+document.getElementById("animalScore").innerHTML =
+"Amaphuzu: " + animalScore;
+
+animalCurrent++;
+
+if(animalCurrent < animalQuestions.length){
+
+loadAnimal();
+
+}else{
+
+alert("🎉 Uqedile!");
+
+}
+
+}
+
+function checkPunctuation(answer){
+
+if(answer==="?"){
+
+alert("✅ Kulungile!");
+
+document.getElementById("punctuationScore").innerHTML =
+"Amaphuzu: 1";
+
+}else{
+
+alert("❌ Cha!");
+
+}
+
+}
+
+function checkPast(answer){
+
+if(answer==="Ngasenga inkomo"){
+
+alert("✅ Kulungile!");
+
+document.getElementById("pastScore").innerHTML =
+"Amaphuzu: 1";
+
+}else{
+
+alert("❌ Cha!");
+
+}
+
+}
+
+function checkCount(answer){
+
+if(answer===3){
+
+alert("✅ Kulungile!");
+
+document.getElementById("countScore").innerHTML =
+"Amaphuzu: 1";
+
+}else{
+
+alert("❌ Cha!");
+
+}
+
+}
+
+function checkMatch(answer){
+
+if(answer==="inkomo"){
+
+alert("✅ Kulungile!");
+
+document.getElementById("matchScore").innerHTML =
+"Amaphuzu: 1";
+
+}else{
+
+alert("❌ Cha!");
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
